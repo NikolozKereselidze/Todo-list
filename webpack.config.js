@@ -9,6 +9,15 @@ module.exports = {
       template: "./src/index.html",
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        include: path.resolve(__dirname, "./src/css"),
+        use: ["style-loader", "css-loader"],
+      },
+    ],
+  },
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
