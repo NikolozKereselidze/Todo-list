@@ -1,0 +1,75 @@
+/* Sidebar */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.sidebar {
+  width: 20vw;
+  height: 100vh;
+  padding-top: 1.4rem;
+  padding-left: 1.8rem;
+
+  background-color: #f7f7f7;
+}
+
+.icon-div {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.icon-text {
+  font-size: 1.1rem;
+}
+
+.sidebar-ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  padding-top: 2rem;
+  padding-left: 0.6rem;
+}
+
+.sidebar-ul > div {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.sidebar-ul > div > i {
+  cursor: pointer;
+}
+
+.fa-inbox {
+  color: #246fe0;
+}
+
+.fa-calendar {
+  color: #058527;
+}
+
+.fa-rectangle-history {
+  color: #692fc2;
+}
+
+.sidebar-li {
+  list-style: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 400;
+  transition: all 0.2s;
+}
+
+.sidebar-li:hover {
+  transform: translateY(-3px);
+}

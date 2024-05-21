@@ -23,6 +23,18 @@ module.exports = {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: "file-loader",
       },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "images/", // specify the output path for images
+            },
+          },
+        ],
+      },
     ],
   },
   output: {
