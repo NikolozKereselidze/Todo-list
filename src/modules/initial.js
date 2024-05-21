@@ -24,5 +24,3 @@ export function createSidebar() {
 
   main.appendChild(sidebar);
 }
-
-
