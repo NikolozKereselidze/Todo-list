@@ -3,10 +3,13 @@ import avatar from "../images/avatar.jpg";
 
 function createSidebarLi(text, className) {
   const liDiv = document.createElement("div");
+
   const li = document.createElement("li");
   li.textContent = text;
   li.classList.add("sidebar-li");
+
   const icon = createIcon(className);
+
   liDiv.appendChild(icon);
   liDiv.appendChild(li);
   return liDiv;
@@ -45,6 +48,9 @@ export function createSidebar() {
   const calendarLi = createSidebarLi("Today", "fa-calendar");
 
   const projectsLi = createSidebarLi("Projects", "fa-rectangle-history");
+  const addProject = document.createElement("i");
+  addProject.classList.add("fa-light", "fa-plus");
+  projectsLi.appendChild(addProject);
 
   sideUl.appendChild(inboxLi);
 

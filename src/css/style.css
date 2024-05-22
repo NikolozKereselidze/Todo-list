@@ -50,6 +50,10 @@
   cursor: pointer;
 }
 
+.sidebar-ul > div:last-child {
+  position: relative;
+}
+
 .fa-inbox {
   color: #246fe0;
 }
@@ -62,6 +66,18 @@
   color: #692fc2;
 }
 
+.fa-plus {
+  font-size: 1.1rem;
+  font-weight: 400;
+  position: absolute;
+  right: 8px;
+  transition: color 0.2s;
+}
+
+.fa-plus:hover {
+  color: #692fc2;
+}
+
 .sidebar-li {
   list-style: none;
   cursor: pointer;
@@ -70,6 +86,79 @@
   transition: all 0.2s;
 }
 
-.sidebar-li:hover {
+.sidebar-li:hover,
+.modal-buttons > button:hover {
   transform: translateY(-3px);
+}
+
+/* Project Modal */
+.main-section {
+  display: flex;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.modal-overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin: 0 auto;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 0.3rem;
+  min-width: 30rem;
+  min-height: 12rem;
+}
+
+.modal > h3 {
+  margin-bottom: 1.2rem;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.modal > label {
+  margin-bottom: 0.4rem;
+  font-weight: 400;
+}
+
+.modal > input {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.4rem;
+}
+
+.modal > input:focus {
+  outline: none;
+  border: 1px solid #058527;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: end;
+  gap: 0.6rem;
+  margin-top: 1.4rem;
+}
+
+.modal-buttons > button:first-child:hover {
+  background-color: #ff3c00d2;
+  color: #fff;
+}
+
+.modal-buttons > button:last-child:hover {
+  background-color: #058527;
+  color: #fff;
+}
+
+.modal-buttons > button {
+  cursor: pointer;
+  padding: 0.6rem 0.8rem;
+  border: none;
+  border-radius: 0.4rem;
+  transition: all 0.2s;
 }
