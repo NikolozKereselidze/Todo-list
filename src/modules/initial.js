@@ -22,6 +22,12 @@ function createIcon(className) {
   return icon;
 }
 
+function clickHandler(e) {
+  e.preventDefault();
+  document.querySelector(".modal-overlay").classList.toggle("hidden");
+  main.classList.toggle("background-opacity");
+}
+
 export function createSidebar() {
   const sidebar = document.createElement("aside");
   sidebar.classList.add("sidebar");
@@ -51,6 +57,8 @@ export function createSidebar() {
   const addProject = document.createElement("i");
   addProject.classList.add("fa-light", "fa-plus");
   projectsLi.appendChild(addProject);
+
+  addProject.addEventListener("click", clickHandler);
 
   sideUl.appendChild(inboxLi);
 

@@ -95,6 +95,10 @@
 .main-section {
   display: flex;
   width: 100vw;
+  transition: all 0.2s;
+}
+
+.background-opacity {
   background: rgba(0, 0, 0, 0.35);
 }
 
@@ -104,6 +108,11 @@
   justify-content: center;
 
   margin: 0 auto;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in, visibility 0.2s ease-out;
+  z-index: -1;
 }
 
 .modal {
@@ -161,4 +170,10 @@
   border: none;
   border-radius: 0.4rem;
   transition: all 0.2s;
+}
+
+.hidden {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1000; /* Ensure it stays on top when visible */
 }
