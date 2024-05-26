@@ -67,5 +67,16 @@ export function createSidebar() {
   sidebar.appendChild(iconDiv);
   sidebar.appendChild(sideUl);
 
+  const projects = JSON.parse(localStorage.getItem("projects")) || [];
+  projects.forEach((projectName) => {
+    const projectDiv = document.createElement("div");
+    projectDiv.classList.add("project-div");
+    const projectNameSpan = document.createElement("span");
+    projectNameSpan.textContent = projectName
+
+    projectDiv.appendChild(projectNameSpan);
+    sidebar.appendChild(projectDiv);
+  });
+
   main.appendChild(sidebar);
 }

@@ -36,15 +36,23 @@ export function createProject() {
   addButton.classList.add("add-project");
 
   addButton.addEventListener("click", () => {
-    const createdProjectDiv = document.createElement("div");
-    createdProjectDiv.classList.add("project-div");
-    const createdProjectName = document.createElement("span");
-    createdProjectName.textContent = projectInput.value;
+    const projectName = projectInput.value;
+    if (projectName) {
+      const projects = JSON.parse(localStorage.getItem("projects")) || [];
+      projects.push(projectName);
+      localStorage.setItem("projects", JSON.stringify(projects));
 
-    createdProjectDiv.appendChild(createdProjectName);
-    document.querySelector(".sidebar").appendChild(createdProjectDiv);
-    projectClickHandler();
-    projectInput.value = "";
+      const createdProjectDiv = document.createElement("div");
+      createdProjectDiv.classList.add("project-div");
+      const createdProjectName = document.createElement("span");
+      createdProjectName.textContent = projectName;
+
+      createdProjectDiv.appendChild(createdProjectName);
+      document.querySelector(".sidebar").appendChild(createdProjectDiv);
+
+      projectClickHandler();
+      projectInput.value = "";
+    }
   });
 
   projectInput.addEventListener("input", () => {
