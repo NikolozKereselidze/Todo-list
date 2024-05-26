@@ -1,9 +1,16 @@
+import { projectClickHandler } from "./initial";
+
 const main = document.querySelector(".main-section");
 
 function createEl(el, text) {
   const element = document.createElement(el);
   element.textContent = text;
   return element;
+}
+
+function addProject() {
+  const createdProjectDiv = document.createElement("div");
+  const createdProjectName = document.createElement("span");
 }
 
 export function createProject() {
@@ -26,8 +33,24 @@ export function createProject() {
   projectInput.setAttribute("name", "project-title");
 
   const closeButton = createEl("button", "Close");
+  closeButton.classList.add("close-modal");
+
+  closeButton.addEventListener("click", projectClickHandler);
 
   const addButton = createEl("button", "Add Project");
+  addButton.classList.add("add-project");
+
+  addButton.addEventListener("click", () => {
+    const createdProjectDiv = document.createElement("div");
+    createdProjectDiv.classList.add("project-div");
+    const createdProjectName = document.createElement("span");
+    createdProjectName.textContent = projectInput.value;
+
+    createdProjectDiv.appendChild(createdProjectName);
+    document.querySelector(".sidebar").appendChild(createdProjectDiv);
+    projectClickHandler();
+    projectInput.value = "";
+  });
 
   modalButtons.appendChild(closeButton);
   modalButtons.appendChild(addButton);

@@ -22,8 +22,7 @@ function createIcon(className) {
   return icon;
 }
 
-function clickHandler(e) {
-  e.preventDefault();
+export function projectClickHandler(e) {
   document.querySelector(".modal-overlay").classList.toggle("hidden");
   main.classList.toggle("background-opacity");
 }
@@ -58,7 +57,7 @@ export function createSidebar() {
   addProject.classList.add("fa-light", "fa-plus");
   projectsLi.appendChild(addProject);
 
-  addProject.addEventListener("click", clickHandler);
+  addProject.addEventListener("click", projectClickHandler);
 
   sideUl.appendChild(inboxLi);
 
