@@ -144,7 +144,7 @@
 
 .modal > input:focus {
   outline: none;
-  border: 1px solid #058527;
+  border: 1px solid #ff3c00d2;
 }
 
 .modal-buttons {
@@ -193,4 +193,8 @@
 
 .project-div:hover {
   background-color: #fff;
+}
+
+.filled-input {
+  border-color: #058527 !important;
 }

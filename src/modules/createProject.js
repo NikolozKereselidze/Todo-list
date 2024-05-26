@@ -8,11 +8,6 @@ function createEl(el, text) {
   return element;
 }
 
-function addProject() {
-  const createdProjectDiv = document.createElement("div");
-  const createdProjectName = document.createElement("span");
-}
-
 export function createProject() {
   const projectDiv = document.createElement("div");
   projectDiv.classList.add("modal-overlay");
@@ -50,6 +45,14 @@ export function createProject() {
     document.querySelector(".sidebar").appendChild(createdProjectDiv);
     projectClickHandler();
     projectInput.value = "";
+  });
+
+  projectInput.addEventListener("input", () => {
+    if (projectInput.value) {
+      projectInput.classList.add("filled-input");
+    } else {
+      projectInput.classList.remove("filled-input");
+    }
   });
 
   modalButtons.appendChild(closeButton);
