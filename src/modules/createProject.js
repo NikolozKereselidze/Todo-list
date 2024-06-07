@@ -1,8 +1,9 @@
+import { selectProject } from "./createTask";
 import { projectClickHandler } from "./initial";
 
 const main = document.querySelector(".main-section");
 
-function createEl(el, text) {
+export function createEl(el, text) {
   const element = document.createElement(el);
   element.textContent = text;
   return element;
@@ -30,7 +31,9 @@ export function createProject() {
   const closeButton = createEl("button", "Close");
   closeButton.classList.add("close-modal");
 
-  closeButton.addEventListener("click", projectClickHandler);
+  closeButton.addEventListener("click", () => {
+    projectClickHandler(".modal-overlay");
+  });
 
   const addButton = createEl("button", "Add Project");
   addButton.classList.add("add-project");
@@ -38,8 +41,8 @@ export function createProject() {
   addButton.addEventListener("click", () => {
     const projectName = projectInput.value;
     if (projectName) {
-      const projects = JSON.parse(localStorage.getItem("projects")) || [];
-      projects.push(projectName);
+      const projects = JSON.parse(localStorage.getItem("projects")) || {};
+      projects[projectName] = projects[projectName] || [];
       localStorage.setItem("projects", JSON.stringify(projects));
 
       const createdProjectDiv = document.createElement("div");
@@ -50,8 +53,9 @@ export function createProject() {
       createdProjectDiv.appendChild(createdProjectName);
       document.querySelector(".sidebar").appendChild(createdProjectDiv);
 
-      projectClickHandler();
+      projectClickHandler(".modal-overlay");
       projectInput.value = "";
+      selectProject();
     }
   });
 

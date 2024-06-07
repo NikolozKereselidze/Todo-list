@@ -15,16 +15,27 @@ function createSidebarLi(text, className) {
   return liDiv;
 }
 
-function createIcon(className) {
+export function createIcon(className) {
   const icon = document.createElement("i");
 
   icon.classList.add("fa-light", className);
   return icon;
 }
 
-export function projectClickHandler(e) {
-  document.querySelector(".modal-overlay").classList.toggle("hidden");
+export function projectClickHandler(el) {
+  const modal = document.querySelector(el);
+  const taskDiv = document.querySelector(".task-div");
+  const sidebar = document.querySelector(".sidebar");
+  modal.classList.toggle("active");
   main.classList.toggle("background-opacity");
+
+  if (modal.classList.contains("active")) {
+    taskDiv?.classList.add("disable");
+    sidebar.classList.add("disable");
+  } else {
+    taskDiv?.classList.remove("disable");
+    sidebar.classList.remove("disable");
+  }
 }
 
 export function createSidebar() {
@@ -57,7 +68,9 @@ export function createSidebar() {
   addProject.classList.add("fa-light", "fa-plus");
   projectsLi.appendChild(addProject);
 
-  addProject.addEventListener("click", projectClickHandler);
+  addProject.addEventListener("click", () => {
+    projectClickHandler(".modal-overlay");
+  });
 
   sideUl.appendChild(inboxLi);
 
@@ -68,15 +81,26 @@ export function createSidebar() {
   sidebar.appendChild(sideUl);
 
   const projects = JSON.parse(localStorage.getItem("projects")) || [];
-  projects.forEach((projectName) => {
+
+  for (let project in projects) {
     const projectDiv = document.createElement("div");
     projectDiv.classList.add("project-div");
     const projectNameSpan = document.createElement("span");
-    projectNameSpan.textContent = projectName
+    projectNameSpan.textContent = project;
 
     projectDiv.appendChild(projectNameSpan);
     sidebar.appendChild(projectDiv);
-  });
+  }
+
+  // projects.forEach((projectName) => {
+  //   const projectDiv = document.createElement("div");
+  //   projectDiv.classList.add("project-div");
+  //   const projectNameSpan = document.createElement("span");
+  //   projectNameSpan.textContent = projectName;
+
+  //   projectDiv.appendChild(projectNameSpan);
+  //   sidebar.appendChild(projectDiv);
+  // });
 
   main.appendChild(sidebar);
 }
