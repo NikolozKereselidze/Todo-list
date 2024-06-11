@@ -210,8 +210,6 @@
 
 /* Creating task */
 .task-div {
-  width: 100%;
-  padding: 8rem 5rem 0 5rem;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -321,4 +319,16 @@
   display: flex;
   justify-content: end;
   gap: 0.4rem;
+}
+
+/* TASKS */
+.task-section {
+  width: 100%;
+  padding: 8rem 5rem 0 5rem;
+}
+
+.task-container {
+  padding: 1.2rem 7.2rem;
+  display: flex;
+  justify-content: space-between;
 }

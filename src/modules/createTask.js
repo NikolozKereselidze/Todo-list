@@ -1,7 +1,9 @@
 import { createEl } from "./createProject";
+import { displayTask } from "./displayTask";
 import { createIcon, projectClickHandler } from "./initial";
 
 const taskDiv = document.createElement("div");
+const taskSection = document.createElement("div");
 const taskForm = document.createElement("form");
 const mainSection = document.querySelector(".main-section");
 let taskModalDiv;
@@ -15,12 +17,19 @@ export function selectProject() {
         const isActive = document.querySelector(".active-project");
         if (isActive) {
           isActive.classList.remove("active-project");
+          isActive.dataset.taskDisplayed = "false";
         }
-
         projectSpan.classList.toggle("active-project");
 
         taskDiv.classList.add("task-div");
+        taskSection.classList.add("task-section");
         createTask(projectSpan.textContent, taskDiv);
+
+        if (projectSpan.dataset.taskDisplayed !== "true") {
+          displayTask();
+          // Set the data attribute to indicate that displayTask has been called
+          projectSpan.dataset.taskDisplayed = "true";
+        }
       });
     });
   }
@@ -34,7 +43,8 @@ export function createTask(projectName, taskDiv) {
   const plusIcon = createIcon("fa-plus");
   taskDiv.appendChild(taskHeader);
   taskDiv.appendChild(plusIcon);
-  mainSection.appendChild(taskDiv);
+  taskSection.appendChild(taskDiv);
+  mainSection.appendChild(taskSection);
 
   plusIcon.addEventListener("click", () => {
     if (!taskModalDiv) {
@@ -191,6 +201,7 @@ function createTaskModal() {
         console.error("No active project selected.");
       }
 
+      displayTask();
       projectClickHandler(".task-modal");
       taskForm.reset();
       mainSection.removeChild(taskModalDiv);
