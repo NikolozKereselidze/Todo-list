@@ -83,6 +83,7 @@ function createTaskInput(placeholder, name, taskModalBody) {
 
     if (placeholder === "Date:") {
       input.type = "date";
+      input.minDate = 0;
     }
 
     if (placeholder === "Priority:") {

@@ -11,7 +11,11 @@ export function displayTask() {
   if (activeProjectSpan) {
     const activeProject = projects[activeProjectSpan.textContent];
     activeProject.forEach((el) => {
+      const taskWrapper = document.createElement("div");
+      const taskCaller = document.createElement("p");
+      taskCaller.textContent = activeProjectSpan.textContent;
       const taskDiv = document.createElement("div");
+      taskDiv.classList.add("task-information");
       const taskTitle = document.createElement("h3");
       taskTitle.textContent = el.title;
       const taskDate = document.createElement("time");
@@ -20,10 +24,13 @@ export function displayTask() {
       taskDescription.textContent = el.description;
       const taskPriority = document.createElement("p");
       taskPriority.textContent = el.priority;
+
+      taskWrapper.appendChild(taskDate);
+      taskWrapper.appendChild(taskCaller);
+      taskWrapper.appendChild(taskPriority);
       taskDiv.appendChild(taskTitle);
-      taskDiv.appendChild(taskDate);
       taskDiv.appendChild(taskDescription);
-      taskDiv.appendChild(taskPriority);
+      taskDiv.appendChild(taskWrapper);
 
       taskContainer.appendChild(taskDiv);
     });
