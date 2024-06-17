@@ -83,7 +83,8 @@ function createTaskInput(placeholder, name, taskModalBody) {
 
     if (placeholder === "Date:") {
       input.type = "date";
-      input.minDate = 0;
+      const today = new Date().toISOString().split("T")[0];
+      input.setAttribute("min", today);
     }
 
     if (placeholder === "Priority:") {
