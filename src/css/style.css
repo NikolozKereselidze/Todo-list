@@ -336,11 +336,10 @@
 }
 
 .task-information {
-  background: #191c29;
+  background: #692fc2;
   color: #fff;
   display: flex;
   flex-direction: column;
-  /* background-color: #404040; */
 
   width: 20rem;
   min-height: 200px;
@@ -355,4 +354,46 @@
   gap: 0.7rem;
   align-items: flex-end;
   justify-content: space-between;
+}
+
+time {
+  margin-left: 0.4rem;
+}
+
+.task-information > div > .fa-calendar {
+  color: #692fc2;
+  background-color: #fff;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.4rem;
+  gap: 0.4rem;
+  margin-right: 0.2rem;
+  font-size: 0.9rem;
+}
+
+.fa-gauge-low,
+.fa-gauge,
+.fa-gauge-high,
+.fa-user {
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.fa-gauge-low {
+  color: #06b534;
+}
+
+.fa-gauge {
+  color: #efef08cc;
+}
+
+.fa-gauge-high {
+  color: #e90202da;
+}
+
+.fa-user {
+  font-size: 1.2rem;
+}
+
+.fa-user > span {
+  margin-left: 0.4rem;
 }
