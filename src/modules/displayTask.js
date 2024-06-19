@@ -15,19 +15,24 @@ function checkPriority(priority) {
   return icon;
 }
 
-export function displayTask() {
+export function displayTask(today, caller, taskDivReceived, taskCont) {
   const mainDiv = document.querySelector(".task-section");
   const projects = JSON.parse(localStorage.getItem("projects")) || {};
   const activeProjectSpan = document.querySelector(".active-project");
 
-  taskContainer.innerHTML = "";
+  if (activeProjectSpan || caller) {
+    let activeProject;
+    taskContainer.innerHTML = "";
 
-  if (activeProjectSpan) {
-    const activeProject = projects[activeProjectSpan.textContent];
+    if (caller) activeProject = projects[caller];
+    else activeProject = projects[activeProjectSpan.textContent];
+
     activeProject.forEach((el) => {
       const taskWrapper = document.createElement("div");
       const taskCaller = document.createElement("span");
-      taskCaller.textContent = activeProjectSpan.textContent;
+      taskCaller.textContent = activeProjectSpan
+        ? activeProjectSpan.textContent
+        : caller;
       const userIcon = createIcon("fa-user");
       const taskDiv = document.createElement("div");
       taskDiv.classList.add("task-information");
@@ -43,18 +48,41 @@ export function displayTask() {
 
       const priorityIcon = checkPriority(el.priority);
 
-      dateIcon.appendChild(taskDate);
-      userIcon.appendChild(taskCaller);
-      taskWrapper.appendChild(dateIcon);
-      //   taskWrapper.appendChild(taskDate);
-      taskWrapper.appendChild(userIcon);
-      taskWrapper.appendChild(priorityIcon);
-      taskDiv.appendChild(taskTitle);
-      taskDiv.appendChild(taskDescription);
-      taskDiv.appendChild(taskWrapper);
+      if (
+        (caller && el.date === new Date().toISOString().split("T")[0]) ||
+        activeProjectSpan
+      ) {
+        dateIcon.appendChild(taskDate);
+        userIcon.appendChild(taskCaller);
+        taskWrapper.appendChild(dateIcon);
+        taskWrapper.appendChild(userIcon);
+        taskWrapper.appendChild(priorityIcon);
+        taskDiv.appendChild(taskTitle);
+        taskDiv.appendChild(taskDescription);
+        taskDiv.appendChild(taskWrapper);
 
-      taskContainer.appendChild(taskDiv);
+        if (taskCont) {
+          taskCont.appendChild(taskDiv);
+        } else {
+          taskContainer.appendChild(taskDiv);
+        }
+      }
     });
-    mainDiv.appendChild(taskContainer);
+    if (taskDivReceived) {
+      const taskMainDiv = document.querySelector(".task-section");
+      if (taskMainDiv) {
+        document.querySelector(".main-section").removeChild(taskMainDiv);
+      }
+      taskDivReceived.innerHtml = "";
+      taskDivReceived.appendChild(taskCont);
+    } else {
+      const taskDivReceived = document.querySelector(".today-task--section");
+      if (taskDivReceived) {
+        document.querySelector(".main-section").removeChild(taskDivReceived);
+        const activeToday = document.querySelector(".active");
+        activeToday.classList.remove("active");
+      }
+      mainDiv.appendChild(taskContainer);
+    }
   }
 }
