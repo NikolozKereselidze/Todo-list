@@ -68,6 +68,7 @@ export function displayTask(today, caller, taskDivReceived, taskCont) {
         }
       }
     });
+
     if (taskDivReceived) {
       const taskMainDiv = document.querySelector(".task-section");
       if (taskMainDiv) {

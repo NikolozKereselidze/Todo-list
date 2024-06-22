@@ -208,8 +208,6 @@ function createTaskModal() {
       taskForm.reset();
       mainSection.removeChild(taskModalDiv);
       taskModalDiv = null;
-    } else {
-      console.error("One or more required fields are missing.");
     }
   });
 
