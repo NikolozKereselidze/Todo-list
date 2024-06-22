@@ -5,6 +5,7 @@ taskContainer.classList.add("task-container");
 
 function checkPriority(priority) {
   let icon;
+
   if (priority === "low") {
     icon = createIcon("fa-gauge-low");
   } else if (priority === "medium") {
@@ -13,6 +14,27 @@ function checkPriority(priority) {
     icon = createIcon("fa-gauge-high");
   } else return;
   return icon;
+}
+
+function changePriority(caller, title, date, description, priority, icon) {
+  const projects = JSON.parse(localStorage.getItem("projects"));
+  projects[caller].forEach((project) => {
+    if (
+      project.title === title &&
+      project.date === date &&
+      project.description === description &&
+      project.priority === priority
+    ) {
+      if (priority === "low") project.priority = "medium";
+      else if (priority === "medium") project.priority = "high";
+      else if (priority === "high") project.priority = "low";
+
+      // Update the localStorage with the modified projects array
+      localStorage.setItem("projects", JSON.stringify(projects));
+      icon = checkPriority(project.priority);
+      displayTask();
+    }
+  });
 }
 
 export function displayTask(today, caller, taskDivReceived, taskCont) {
@@ -46,7 +68,18 @@ export function displayTask(today, caller, taskDivReceived, taskCont) {
       const taskPriority = document.createElement("p");
       taskPriority.textContent = el.priority;
 
-      const priorityIcon = checkPriority(el.priority);
+      let priorityIcon = checkPriority(el.priority);
+
+      priorityIcon.addEventListener("click", (el) => {
+        priorityIcon = changePriority(
+          taskCaller.textContent,
+          taskTitle.textContent,
+          taskDate.textContent,
+          taskDescription.textContent,
+          taskPriority.textContent,
+          priorityIcon
+        );
+      });
 
       if (
         (caller && el.date === new Date().toISOString().split("T")[0]) ||
