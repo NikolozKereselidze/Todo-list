@@ -37,6 +37,34 @@ function changePriority(caller, title, date, description, priority, icon) {
   });
 }
 
+function changeCaller(currentCaller, title, date, description) {
+  const projects = JSON.parse(localStorage.getItem("projects"));
+  const projectNames = Object.keys(projects);
+  const currentIndex = projectNames.indexOf(currentCaller);
+  const nextIndex = (currentIndex + 1) % projectNames.length;
+  const newCaller = projectNames[nextIndex];
+
+  // Find the task in the current project
+  const taskIndex = projects[currentCaller].findIndex(
+    (task) =>
+      task.title === title &&
+      task.date === date &&
+      task.description === description
+  );
+
+  if (taskIndex !== -1) {
+    // Remove the task from the current project
+    const [task] = projects[currentCaller].splice(taskIndex, 1);
+
+    // Add the task to the new project
+    projects[newCaller].push(task);
+
+    // Update localStorage with the new projects object
+    localStorage.setItem("projects", JSON.stringify(projects));
+    displayTask(); // Update the displayed tasks
+  }
+}
+
 export function displayTask(today, caller, taskDivReceived, taskCont) {
   const mainDiv = document.querySelector(".task-section");
   const projects = JSON.parse(localStorage.getItem("projects")) || {};
@@ -70,7 +98,7 @@ export function displayTask(today, caller, taskDivReceived, taskCont) {
 
       let priorityIcon = checkPriority(el.priority);
 
-      priorityIcon.addEventListener("click", (el) => {
+      priorityIcon.addEventListener("click", () => {
         priorityIcon = changePriority(
           taskCaller.textContent,
           taskTitle.textContent,
@@ -78,6 +106,15 @@ export function displayTask(today, caller, taskDivReceived, taskCont) {
           taskDescription.textContent,
           taskPriority.textContent,
           priorityIcon
+        );
+      });
+
+      userIcon.addEventListener("click", () => {
+        changeCaller(
+          taskCaller.textContent,
+          taskTitle.textContent,
+          taskDate.textContent,
+          taskDescription.textContent
         );
       });
 
