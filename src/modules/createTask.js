@@ -185,6 +185,7 @@ function createTaskModal() {
         date: taskDate.value,
         description: taskDescription.value,
         priority: taskPriority.value,
+        status: "incomplete",
       };
 
       const activeProjectSpan = document.querySelector(".active-project");

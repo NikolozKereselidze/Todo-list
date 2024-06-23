@@ -65,6 +65,27 @@ function changeCaller(currentCaller, title, date, description) {
   }
 }
 
+function taskStatusListener(caller, title, date, description) {
+  const projects = JSON.parse(localStorage.getItem("projects"));
+
+  projects[caller].forEach((project) => {
+    if (
+      project.title === title &&
+      project.date === date &&
+      project.description === description
+    ) {
+      if (project.status === "incomplete") {
+        project.status = "complete";
+      } else {
+        project.status = "incomplete";
+      }
+    }
+  });
+
+  localStorage.setItem("projects", JSON.stringify(projects));
+  displayTask();
+}
+
 export function displayTask(today, caller, taskDivReceived, taskCont) {
   const mainDiv = document.querySelector(".task-section");
   const projects = JSON.parse(localStorage.getItem("projects")) || {};
@@ -79,11 +100,19 @@ export function displayTask(today, caller, taskDivReceived, taskCont) {
 
     activeProject.forEach((el) => {
       const taskWrapper = document.createElement("div");
+      taskWrapper.classList.add("task-footer--container");
       const taskCaller = document.createElement("span");
+      const headerDiv = document.createElement("div");
+      headerDiv.classList.add("task-header--container");
       taskCaller.textContent = activeProjectSpan
         ? activeProjectSpan.textContent
         : caller;
       const userIcon = createIcon("fa-user");
+      const statusIcon = createIcon(
+        el.status === "complete" ? "fa-check-to-slot" : "fa-xmark-to-slot"
+      );
+      statusIcon.classList.add("task-status--icon");
+
       const taskDiv = document.createElement("div");
       taskDiv.classList.add("task-information");
       const taskTitle = document.createElement("h3");
@@ -93,6 +122,7 @@ export function displayTask(today, caller, taskDivReceived, taskCont) {
       const dateIcon = createIcon("fa-calendar");
       const taskDescription = document.createElement("p");
       taskDescription.textContent = el.description;
+
       const taskPriority = document.createElement("p");
       taskPriority.textContent = el.priority;
 
@@ -118,6 +148,15 @@ export function displayTask(today, caller, taskDivReceived, taskCont) {
         );
       });
 
+      statusIcon.addEventListener("click", () => {
+        taskStatusListener(
+          taskCaller.textContent,
+          taskTitle.textContent,
+          taskDate.textContent,
+          taskDescription.textContent
+        );
+      });
+
       if (
         (caller && el.date === new Date().toISOString().split("T")[0]) ||
         activeProjectSpan
@@ -127,7 +166,9 @@ export function displayTask(today, caller, taskDivReceived, taskCont) {
         taskWrapper.appendChild(dateIcon);
         taskWrapper.appendChild(userIcon);
         taskWrapper.appendChild(priorityIcon);
-        taskDiv.appendChild(taskTitle);
+        headerDiv.appendChild(taskTitle);
+        headerDiv.appendChild(statusIcon);
+        taskDiv.appendChild(headerDiv);
         taskDiv.appendChild(taskDescription);
         taskDiv.appendChild(taskWrapper);
 
