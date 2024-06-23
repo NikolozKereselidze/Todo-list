@@ -1451,6 +1451,72 @@ function displayTask(today, caller, taskDivReceived, taskCont) {
 
 /***/ }),
 
+/***/ "./src/modules/displayToday.js":
+/*!*************************************!*\
+  !*** ./src/modules/displayToday.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   displayToday: () => (/* binding */ displayToday)
+/* harmony export */ });
+/* harmony import */ var _displayTask__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./displayTask */ "./src/modules/displayTask.js");
+
+let display = false;
+
+function displayToday() {
+  const sidebarLi = document.querySelectorAll(".sidebar-li");
+  const mainSection = document.querySelector(".main-section");
+  let calledProject;
+  let todayLi;
+  sidebarLi.forEach((el) => {
+    if (el.textContent === "Today") {
+      todayLi = el;
+    } else return;
+  });
+
+  todayLi.addEventListener("click", (el) => {
+    const activeProject = document.querySelector(".active-project");
+    if (activeProject) {
+      activeProject.dataset.taskDisplayed = false;
+      activeProject.classList.remove("active-project");
+    }
+
+    if (!todayLi.classList.contains("active")) {
+      const taskDiv = document.createElement("div");
+      const taskContainer = document.createElement("div");
+      taskContainer.classList.add("task-container");
+      const projects = JSON.parse(localStorage.getItem("projects"));
+      for (let project in projects) {
+        if (projects[project].length > 0) {
+          todayLi.classList.add("active");
+
+          taskDiv.classList.add("today-task--section");
+          const today = new Date().toISOString().split("T")[0];
+          projects[project].forEach((task) => {
+            if (task.date === today && calledProject != project) {
+
+              (0,_displayTask__WEBPACK_IMPORTED_MODULE_0__.displayTask)(today, project, taskDiv, taskContainer);
+              calledProject = project;
+              display = true;
+
+            }
+          });
+          calledProject = "";
+        }
+      }
+
+      if (display) {
+        mainSection.appendChild(taskDiv);
+        display = false;
+      }
+    }
+  });
+}
+
+/***/ }),
+
 /***/ "./src/modules/initial.js":
 /*!********************************!*\
   !*** ./src/modules/initial.js ***!
@@ -1683,7 +1749,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _createProject__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./createProject */ "./src/modules/createProject.js");
 /* harmony import */ var _createTask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./createTask */ "./src/modules/createTask.js");
 /* harmony import */ var _displayTask__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./displayTask */ "./src/modules/displayTask.js");
-Object(function webpackMissingModule() { var e = new Error("Cannot find module './displayToday'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _displayToday__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./displayToday */ "./src/modules/displayToday.js");
 
 
 
@@ -1695,7 +1761,7 @@ Object(function webpackMissingModule() { var e = new Error("Cannot find module '
 (0,_createProject__WEBPACK_IMPORTED_MODULE_2__.createProject)();
 (0,_createTask__WEBPACK_IMPORTED_MODULE_3__.selectProject)();
 (0,_displayTask__WEBPACK_IMPORTED_MODULE_4__.displayTask)();
-Object(function webpackMissingModule() { var e = new Error("Cannot find module './displayToday'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())();
+(0,_displayToday__WEBPACK_IMPORTED_MODULE_5__.displayToday)();
 
 /******/ })()
 ;
